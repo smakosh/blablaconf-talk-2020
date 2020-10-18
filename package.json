@@ -4,7 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "mdx-deck deck.mdx -p 3999"
+    "start": "mdx-deck deck.mdx -p 3999",
+    "build": "npm run now-build",
+    "build:presentation": "mdx-deck build deck.mdx --no-html",
+    "build:images": "cp -r images dist/",
+    "now-build": "yarn run build:presentation && yarn run build:images",
+    "deploy": "now"
   },
   "devDependencies": {
     "mdx-deck": "^4.1.1"

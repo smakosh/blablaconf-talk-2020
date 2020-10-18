@@ -120,9 +120,9 @@ export const getStaticProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 		revalidate: 2,
 	};
 };
@@ -144,9 +144,9 @@ export const getStaticProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 		revalidate: 2,
 	};
 };
@@ -168,9 +168,9 @@ export const getStaticProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 		revalidate: 2,
 	};
 };
@@ -180,6 +180,7 @@ export default HomePage;
 
 </CodeSurfer>
 
+
 ---
 
 ## getStaticProps, getStaticPaths
@@ -187,6 +188,7 @@ export default HomePage;
 ---
 
 <CodeSurfer theme={nightOwl}>
+
 
 ```js 12:22 title="[id].js"
 import { useRouter } from "next/router";
@@ -304,6 +306,7 @@ export default ProductPage;
 
 </CodeSurfer>
 
+
 ---
 
 ## getServerSideProps
@@ -314,6 +317,7 @@ import { CodeSurfer, Step } from "code-surfer";
 import { nightOwl } from "@code-surfer/themes";
 
 <CodeSurfer theme={nightOwl}>
+
 
 ```js 8:19 title="index.js"
 const HomePage = ({ products, categories }) => (
@@ -329,9 +333,9 @@ export const getServerSideProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 	};
 };
 
@@ -352,9 +356,9 @@ export const getServerSideProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 	};
 };
 
@@ -375,9 +379,9 @@ export const getServerSideProps = async () => {
 
 	return {
 		props: {
-      products,
-		  categories
-    },
+			products,
+			categories,
+		},
 	};
 };
 
@@ -385,6 +389,7 @@ export default HomePage;
 ```
 
 </CodeSurfer>
+
 
 ---
 

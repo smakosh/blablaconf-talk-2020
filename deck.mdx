@@ -1,0 +1,404 @@
+<Head>
+	<title>WTH is ISR?</title>
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@smakosh" />
+	<meta name="twitter:title" content="WTH is ISR?" />
+	<meta
+		name="twitter:description"
+		content="A quick explanation of what incremental static regeneration in Next js"
+	/>
+	<meta
+		name="twitter:image"
+		content="https://2020.wth-isg.talks.smakosh.com/card.png"
+	/>
+</Head>
+
+# Salam | Hello | مرحبا
+
+---
+
+This talk is about
+
+## ISR || ISG || iSSG using Next.js
+
+---
+
+What else will we talk about?
+
+<Steps>
+
+
+- SSG vs SSR vs CSR vs ISR
+- Explaining ISR
+- Quick introduction to Next js
+- getStaticProps, getStaticPaths, getServerSideProps
+- Demo
+
+</Steps>
+
+
+---
+
+## Let's get started!
+
+---
+
+import csr from "./images/csr.png";
+
+## CSR
+
+<div style={{ width: 900, height: 900 }}>
+	<img src={csr} />
+</div>
+
+---
+
+import ssr from "./images/ssr.png";
+
+## SSR
+
+<div style={{ width: 900, height: 900 }}>
+	<img src={ssr} />
+</div>
+
+---
+
+import ssg from "./images/ssg.png";
+
+## SSG
+
+<div style={{ width: 900, height: 900 }}>
+	<img src={ssg} />
+</div>
+
+---
+
+import isr from "./images/isr.png";
+
+## ISR
+
+<div style={{ width: 900, height: 900 }}>
+	<img src={isr} />
+</div>
+
+---
+
+import next from "./images/next.svg";
+
+<div style={{ width: 800, height: 800 }}>
+	<img src={next} />
+</div>
+
+---
+
+import pros from "./images/pros.png";
+
+<div style={{ width: 800, height: 800 }}>
+	<img src={pros} />
+</div>
+
+---
+
+## getStaticProps, getStaticPaths, getServerSideProps
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+
+```js 8:19 title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getStaticProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+		revalidate: 2,
+	};
+};
+
+export default HomePage;
+```
+
+```js 1:6 title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getStaticProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+		revalidate: 2,
+	};
+};
+
+export default HomePage;
+```
+
+```js title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getStaticProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+		revalidate: 2,
+	};
+};
+
+export default HomePage;
+```
+
+</CodeSurfer>
+
+---
+
+## getStaticProps, getStaticPaths
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js 12:22 title="[id].js"
+import { useRouter } from "next/router";
+
+const ProductPage = ({ product }) => {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <h1>Loading...</h1>;
+	}
+	return <pre>{JSON.stringify(product, undefined, 2)}</pre>;
+};
+
+export const getStaticPaths = async () => {
+	const products = await fetchProducts();
+	const paths = products.map(({ id }) => ({
+		params: { id },
+	}));
+
+	return {
+		paths,
+		fallback: true,
+	};
+};
+
+export const getStaticProps = async ({ params: { id } }) => {
+	const product = await fetchProductById(id);
+
+	return {
+		props: {
+			product,
+		},
+		revalidate: 2,
+	};
+};
+
+export default ProductPage;
+```
+
+```js 24:33 title="[id].js"
+import { useRouter } from "next/router";
+
+const ProductPage = ({ product }) => {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <h1>Loading...</h1>;
+	}
+	return <pre>{JSON.stringify(product, undefined, 2)}</pre>;
+};
+
+export const getStaticPaths = async () => {
+	const products = await fetchProducts();
+	const paths = products.map(({ id }) => ({
+		params: { id },
+	}));
+
+	return {
+		paths,
+		fallback: true,
+	};
+};
+
+export const getStaticProps = async ({ params: { id } }) => {
+	const product = await fetchProductById(id);
+
+	return {
+		props: {
+			product,
+		},
+		revalidate: 2,
+	};
+};
+
+export default ProductPage;
+```
+
+```js title="[id].js"
+import { useRouter } from "next/router";
+
+const ProductPage = ({ product }) => {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <h1>Loading...</h1>;
+	}
+	return <pre>{JSON.stringify(product, undefined, 2)}</pre>;
+};
+
+export const getStaticPaths = async () => {
+	const products = await fetchProducts();
+	const paths = products.map(({ id }) => ({
+		params: { id },
+	}));
+
+	return {
+		paths,
+		fallback: true,
+	};
+};
+
+export const getStaticProps = async ({ params: { id } }) => {
+	const product = await fetchProductById(id);
+
+	return {
+		props: {
+			product,
+		},
+		revalidate: 2,
+	};
+};
+
+export default ProductPage;
+```
+
+</CodeSurfer>
+
+---
+
+## getServerSideProps
+
+---
+
+import { CodeSurfer, Step } from "code-surfer";
+import { nightOwl } from "@code-surfer/themes";
+
+<CodeSurfer theme={nightOwl}>
+
+```js 8:19 title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getServerSideProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+	};
+};
+
+export default HomePage;
+```
+
+```js 1:6 title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getServerSideProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+	};
+};
+
+export default HomePage;
+```
+
+```js title="index.js"
+const HomePage = ({ products, categories }) => (
+	<>
+		<pre>{JSON.stringify(products, undefined, 2)}</pre>
+		<pre>{JSON.stringify(categories, undefined, 2)}</pre>
+	</>
+);
+
+export const getServerSideProps = async () => {
+	const products = await fetchProducts();
+	const categories = await fetchCategories();
+
+	return {
+		props: {
+      products,
+		  categories
+    },
+	};
+};
+
+export default HomePage;
+```
+
+</CodeSurfer>
+
+---
+
+## Demo time
+
+---
+
+## Questions time!
+
+---
+
+Refs:
+
+- Next js Docs
+- Ontwik.dev for demo
+- MDX Deck and Code surf for slides
+- https://next-code-elimination.now.sh/

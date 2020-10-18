@@ -1,0 +1,15 @@
+{
+  "name": "isg-blabla-conf",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "mdx-deck deck.mdx -p 3999"
+  },
+  "devDependencies": {
+    "mdx-deck": "^4.1.1"
+  },
+  "dependencies": {
+    "code-surfer": "^3.1.1"
+  }
+}
